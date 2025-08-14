@@ -2,15 +2,32 @@
 
 <template>
   <header>
-    <nav>
+    <nav class="flex gap-8">
       <RouterLink :to="{ name: 'Home' }">
         Home
       </RouterLink>
+      <RouterLink :to="{ name: 'Carousel' }">
+        Carousel
+      </RouterLink>
     </nav>
   </header>
-  <main>
+  <div class="viewport">
     <RouterView />
-  </main>
+  </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+  header {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px 20px;
+    position: fixed;
+    z-index: 2;
+    width: 100%;
+  }
+  .viewport {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+  }
+</style>
