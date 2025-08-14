@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import CarouselSlide from './CarouselSlide.vue'
+import CarouselNavigation from './CarouselNavigation.vue'
 
 const props = defineProps({
   slideComponents: {
@@ -9,7 +10,9 @@ const props = defineProps({
   }
 })
 
-const show = ref(0)
+const current = ref(0)
+const min = 0
+const max = props.slideComponents.length - 1
 
 const keyListener = event => {
   if (event.key === 'ArrowRight') {
@@ -21,10 +24,14 @@ const keyListener = event => {
 }
 
 const handlePrevious = () => {
-  show.value--
+  if (current.value > min) {
+    current.value--
+  }
 }
 const handleNext = () => {
-  show.value++
+  if (current.value < max) {
+    current.value++
+  }
 }
 
 onMounted(() => {
@@ -36,7 +43,11 @@ onMounted(() => {
   <CarouselSlide
     v-for="(cmp, i) in props.slideComponents"
     :key="i"
-    :show="show === i">
+    :show="current === i">
     <component :is="cmp" />
   </CarouselSlide>
+  <CarouselNavigation
+    :count="props.slideComponents.length"
+    :current="current"
+  />
 </template>

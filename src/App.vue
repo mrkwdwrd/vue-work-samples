@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-  <header>
+  <header class="bg-gray-800 text-white">
     <nav class="flex gap-8">
       <RouterLink :to="{ name: 'Home' }">
         Home
@@ -18,7 +18,6 @@
 
 <style scoped>
   header {
-    background: rgba(0, 0, 0, 0.5);
     padding: 10px 20px;
     position: fixed;
     z-index: 2;

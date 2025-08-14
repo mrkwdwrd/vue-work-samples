@@ -1,11 +1,13 @@
 <script setup>
 import CarouselLayout from '@/carousel/CarouselLayout.vue'
 import SlideOne from '@/slides/SlideOne.vue'
+import SlideThree from '@/slides/SlideThree.vue'
 import SlideTwo from '@/slides/SlideTwo.vue'
 
 const slides = [
   SlideOne,
-  SlideTwo
+  SlideTwo,
+  SlideThree
 ]
 </script>
 
