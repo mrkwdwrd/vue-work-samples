@@ -49,5 +49,6 @@ onMounted(() => {
   <CarouselNavigation
     :count="props.slideComponents.length"
     :current="current"
+    @show="val => { current = val}"
   />
 </template>
