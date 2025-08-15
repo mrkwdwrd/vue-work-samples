@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
 import CarouselSlide from './CarouselSlide.vue'
 import CarouselNavigation from './CarouselNavigation.vue'
 
@@ -13,6 +13,7 @@ const props = defineProps({
 const current = ref(0)
 const min = 0
 const max = props.slideComponents.length - 1
+const showNav = ref(false)
 
 const keyListener = event => {
   if (event.key === 'ArrowRight') {
@@ -36,6 +37,13 @@ const handleNext = () => {
 
 onMounted(() => {
   document.addEventListener('keydown', keyListener)
+  nextTick(() => {
+    showNav.value = max > 1
+  })
+})
+
+onBeforeUnmount(() => {
+  document.removeEventListener('keydown', keyListener)
 })
 </script>
 
@@ -46,9 +54,23 @@ onMounted(() => {
     :show="current === i">
     <component :is="cmp" />
   </CarouselSlide>
-  <CarouselNavigation
-    :count="props.slideComponents.length"
-    :current="current"
-    @show="val => { current = val}"
-  />
+
+  <transition name="slide-up">
+    <CarouselNavigation
+      v-if="showNav"
+      :count="props.slideComponents.length"
+      :current="current"
+      @show="val => { current = val }"
+    />
+  </transition>
 </template>
+
+<style scoped>
+  .slide-up-enter-active {
+    transition: all 0.5s cubic-bezier(0.3, 0.2, 0.2, 1.4);
+  }
+
+  .slide-up-enter-from {
+    transform: translateY(100%);
+  }
+</style>
